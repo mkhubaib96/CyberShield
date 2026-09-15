@@ -1,13 +1,61 @@
-# CyberShield Security Notes
 
-## Data boundary
-CyberShield can run completely local-first. When Supabase environment variables are present, the workspace snapshot is synced to a per-user Supabase row protected by Row Level Security (RLS).
+---
+
+#  SECURITY.md 
+
+```markdown
+# Security Policy 🛡️
+
+## CyberShield Security Model
+
+CyberShield is designed as a consent-first child online-safety decision-support application.
+
+The project demonstrates security architecture and safety-analysis workflows without performing covert surveillance or unauthorized data collection.
+
+---
+
+## Responsible Use
+
+CyberShield does not currently:
+
+- secretly monitor devices
+- bypass authentication
+- scrape private accounts
+- intercept private communications
+- collect real children's information
+- provide covert surveillance capabilities
+
+Real integrations must use authorized APIs, explicit permissions, and appropriate consent.
+
+---
 
 ## Authentication
-The production path uses Supabase Auth. The local fallback is intentionally demo-only. Local registration stores a PBKDF2 password verifier rather than plaintext credentials, but it is not a substitute for server-side authentication.
 
-## Sensitive data
-The threat analyzer is decision support. Do not send real children's private conversations to a demo deployment unless you have an authorized data-processing design. Production integrations must use explicit consent, authorized platform APIs/device services, access control and appropriate retention policies.
+CyberShield supports Supabase Authentication for production deployments.
 
-## Deployment
-Never commit `.env` or service-role keys. Only the Supabase URL and public anon key belong in Vite client configuration; database access is enforced by RLS.
+Authentication is handled by Supabase Auth rather than by storing user passwords in the application database.
+
+A local authentication fallback exists for demonstration purposes.
+
+The local authentication mode should not be considered a replacement for a production identity provider.
+
+---
+
+## Database Security
+
+Cloud workspace data is stored in Supabase PostgreSQL.
+
+The workspace table is protected using Row Level Security (RLS).
+
+Each workspace is associated with an authenticated Supabase user.
+
+Expected access rule:
+
+```text
+authenticated user
+        ↓
+auth.uid()
+        ↓
+matching user_id
+        ↓
+workspace access
