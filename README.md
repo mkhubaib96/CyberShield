@@ -1,100 +1,186 @@
 # CyberShield 🛡️
 
-### See risk early. Respond with confidence.
+## Child Online Safety Intelligence Dashboard
 
-CyberShield is a child online-safety intelligence platform designed to help guardians understand, analyze, prioritize, and respond to potential digital safety risks.
+CyberShield is a portfolio-grade child online-safety intelligence dashboard designed to help parents review digital-safety signals across a family's connected services.
 
-It combines an explainable threat-analysis engine, incident management, child profiles, platform telemetry, event simulation, security intelligence, audit trails, and persistent workspace state into a unified security-console experience.
+It combines a modern security-console interface with explainable threat analysis, incident triage, child profiles, platform simulations, persistent workspace state, authentication, and optional cloud persistence.
 
-> **Responsible-use boundary:** CyberShield is a functional prototype and demonstration platform. It does not secretly monitor social networks, devices, or private communications. Real-world integrations require explicit consent, authorized APIs, platform permissions, and appropriate privacy safeguards.
+> **Responsible-use boundary:** CyberShield is a functional demonstration and decision-support application. It does not secretly monitor social networks, devices, or users. Real integrations require explicit consent, authorized APIs, platform permissions, and appropriate device services. Threat analysis should support human review rather than replace it.
 
 ---
 
 ## 🚀 Live Demo
 
-**Production:** [Open CyberShield]((https://cyber-shield-psi-topaz.vercel.app/))
+**Production deployment:**
 
-The live deployment is hosted on Vercel with Supabase-backed authentication and workspace persistence.
+https://cyber-shield-psi-topaz.vercel.app/
+
+The application is deployed using Vercel and can be used as an interactive demonstration of the CyberShield workflow.
 
 ---
 
-# ✨ Features
+## ✨ Features
 
-## 🛡️ Security Command Center
-
-A centralized dashboard for monitoring the overall digital-safety posture.
-
-- Family safety posture
+### 🏠 Security Command Center
+- Family-wide safety posture
 - Active incident overview
-- Risk statistics
-- Safety score visualization
-- Screen-time metrics
-- Platform health
-- Recent security events
+- Risk and response metrics
+- Platform/service health
+- Recent security activity
 - Responsive security-console interface
 
----
-
-## 👨‍👩‍👧 Child Profiles
-
-Manage individual child profiles and their safety state.
-
-- Child profiles
+### 👨‍👩‍👧 Child Profiles
+- Individual child profiles
 - Safety scores
-- Active incident counts
-- Screen-time information
+- Active incident state
 - Age-aware profile information
-- Risk overview
-- Individual profile state
+- Per-child risk visibility
 
----
-
-## 🚨 Alert & Incident Management
-
-CyberShield converts detected signals into actionable incidents.
-
-- Incident queue
+### 🚨 Incident & Alert Management
+- Searchable incident queue
 - Severity classification
-- Confidence score
-- Threat category
-- Matched indicators
+- Confidence levels
+- Explainable indicators
 - Incident details
-- Read/unread state
-- Resolve workflow
-- Search and filtering
-- Incident statistics
+- Read and resolve workflow
+- Audit trail for important actions
+
+### 🧠 Explainable Threat Analyzer
+CyberShield uses a deterministic, transparent threat-analysis engine.
+
+It can identify signals associated with:
+
+- No Significant Risk
+- Inappropriate Language
+- Cyberbullying
+- Potential Grooming
+- Explicit Content
+- Scam / Phishing
+- Location Sharing
+- Privacy Risk
+- Self-Harm Content
+- Threat / Violence
+
+The analyzer provides:
+
+- Risk score
+- Severity
+- Confidence
+- Category
+- Matched indicators
+- Explanation
+- Recommended response
+
+### 🧪 Event Simulator
+The Event Simulator demonstrates the detection pipeline without requiring access to real social platforms or devices.
+
+It can simulate safety events and show how they move through the CyberShield workflow.
+
+### 📊 Intelligence Center
+- Family safety posture
+- Incident analytics
+- Threat-category distribution
+- Confidence distribution
+- Risk by child
+- Service telemetry
+- Audit trail
+- Workspace export
+
+### 🔐 Authentication
+CyberShield supports:
+
+- Supabase Authentication
+- Email/password registration
+- Email/password login
+- Session persistence
+- Secure sign-out
+- Local demo authentication fallback
+
+### ☁️ Cloud Workspace
+When Supabase is configured:
+
+- User-scoped workspace persistence
+- Supabase Auth
+- PostgreSQL-backed workspace storage
+- Row Level Security (RLS)
+- Automatic workspace synchronization
+
+### 💾 Local-First Architecture
+Without Supabase, CyberShield can operate locally using:
+
+- Browser localStorage
+- User-scoped state
+- Local demo authentication
+- Persistent workspace data
+
+### ⚙️ Workspace Controls
+- Export workspace
+- Export audit trail
+- Reset demo data
+- Clear local cache
+- Cloud synchronization
+- Privacy/data controls
+
+### 🛡️ Security
+- Supabase Row Level Security
+- User-scoped cloud workspace
+- No service-role key in frontend
+- Security headers through Vercel
+- Environment variables for deployment secrets/configuration
+- Error boundary for graceful application failures
 
 ---
 
-## 🧠 Explainable Threat Analyzer
+## 🧰 Tech Stack
 
-CyberShield includes a deterministic, explainable threat-analysis engine.
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- Radix UI
+- React Router
+- Recharts
 
-The analyzer evaluates text for signals associated with:
+### Authentication & Cloud
+- Supabase Auth
+- Supabase PostgreSQL
+- Supabase Row Level Security
 
-- Potential grooming
-- Cyberbullying
-- Scam / phishing
-- Explicit content
-- Location sharing
-- Privacy risks
-- Self-harm content
-- Threats / violence
-- Inappropriate language
+### Testing & Quality
+- Vitest
+- ESLint
+- TypeScript
+- Vite production build
 
-Instead of producing only a prediction, the system provides:
+### Deployment
+- Vercel
+- GitHub
+
+---
+
+## 🏗️ Architecture
 
 ```text
-Threat Score
-     ↓
-Severity
-     ↓
-Confidence
-     ↓
-Threat Category
-     ↓
-Matched Indicators
-     ↓
-Explanation
-     ↓
-Recommended Response
+                    ┌──────────────────────┐
+                    │      CyberShield     │
+                    │   React + TypeScript │
+                    └──────────┬───────────┘
+                               │
+             ┌─────────────────┼─────────────────┐
+             │                 │                 │
+             ▼                 ▼                 ▼
+       Threat Engine      Workspace Store    Auth Layer
+       Rule-based &       Local / Cloud      Supabase /
+       Explainable           State           Local Demo
+             │                 │                 │
+             └─────────────────┼─────────────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      Supabase        │
+                    │ Auth + PostgreSQL    │
+                    │       + RLS          │
+                    └──────────────────────┘
